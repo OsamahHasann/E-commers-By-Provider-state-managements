@@ -11,6 +11,7 @@ class ProductRepository {
         description: 'meat burger with chider cheec',
         price: 5.5,
         image: AppAssets.burger,
+        category: "food",
       ),
       ProductModel(
         id: '2',
@@ -18,6 +19,7 @@ class ProductRepository {
         description: 'meat burger with chider cheec',
         price: 5.5,
         image: AppAssets.burger2,
+        category: "food",
       ),
       ProductModel(
         id: '3',
@@ -25,6 +27,7 @@ class ProductRepository {
         description: 'vegitarain pizza with margrit',
         price: 8.0,
         image:AppAssets.pizza,
+        category: "food",
       ),
       ProductModel(
         id: '4',
@@ -32,6 +35,23 @@ class ProductRepository {
         description: 'arabic shawerma with meet and vegitables',
         price: 8.0,
         image:AppAssets.shawerma,
+        category: "food",
+      ),
+      ProductModel(
+        id: '5',
+        name: 'men perfume',
+        description: 'arabic shawerma with meet and vegitables',
+        price: 20.0,
+        image:AppAssets.per1,
+        category: "perf",
+      ),
+      ProductModel(
+        id: '6',
+        name: 'women perfume',
+        description: 'arabic shawerma with meet and vegitables',
+        price: 20.0,
+        image:AppAssets.perf2,
+        category: "perf",
       ),
     ];
   }

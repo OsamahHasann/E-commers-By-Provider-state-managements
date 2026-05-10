@@ -1,4 +1,5 @@
 import 'package:e_commers_by_provider/core/constants/app_constans.dart';
+import 'package:e_commers_by_provider/core/widgets/custom_bott_nav.dart';
 import 'package:e_commers_by_provider/core/widgets/product_card.dart';
 import 'package:e_commers_by_provider/features/cart/cart_presention/cart_screen.dart';
 import 'package:e_commers_by_provider/features/cart/cart_provider/cart_provider.dart';
@@ -9,7 +10,7 @@ import 'package:provider/provider.dart';
 //  import '../product_provider/product_provider.dart';
 
 class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({super.key});
+   const ProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +76,8 @@ class ProductsScreen extends StatelessWidget {
           );
         },
       ),
+
+      bottomNavigationBar: CustomBottNav(),
     );
   }
 }

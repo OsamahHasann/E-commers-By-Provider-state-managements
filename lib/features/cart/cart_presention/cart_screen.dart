@@ -1,4 +1,5 @@
 import 'package:e_commers_by_provider/core/constants/app_constans.dart';
+import 'package:e_commers_by_provider/core/widgets/custom_bott_nav.dart';
 import 'package:e_commers_by_provider/core/widgets/product_card.dart';
 import 'package:e_commers_by_provider/features/cart/cart_provider/cart_provider.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,8 @@ class CartScreen extends StatelessWidget {
           );
         },
       ),
+
+      bottomNavigationBar: CustomBottNav(),
     );
   }
 }

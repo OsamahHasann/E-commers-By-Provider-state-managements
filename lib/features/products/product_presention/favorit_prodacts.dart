@@ -1,4 +1,5 @@
 import 'package:e_commers_by_provider/core/constants/app_constans.dart';
+import 'package:e_commers_by_provider/core/widgets/custom_bott_nav.dart';
 import 'package:e_commers_by_provider/core/widgets/product_card.dart';
 import 'package:e_commers_by_provider/features/products/product_provider/favorit_provider.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,8 @@ class FavoritesScreen extends StatelessWidget {
           );
         },
       ),
+
+      bottomNavigationBar: CustomBottNav(),
     );
   }
 }
