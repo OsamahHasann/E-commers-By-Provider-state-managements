@@ -5,7 +5,7 @@ class AppConstants {
   static double get cardRadius => 20.0; 
   
   
-  static const String appName = "Kazon Restaurant";
+  static const String appName = "Kazon Store";
 
   
 }

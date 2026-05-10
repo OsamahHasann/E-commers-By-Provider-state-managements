@@ -21,6 +21,14 @@ class ProductRepository {
         image: AppAssets.burger2,
         category: "food",
       ),
+       ProductModel(
+        id: '5',
+        name: 'men perfume',
+        description: 'arabic shawerma with meet and vegitables',
+        price: 20.0,
+        image:AppAssets.per1,
+        category: "perfume",
+      ),
       ProductModel(
         id: '3',
         name: 'italic pizza',
@@ -37,21 +45,14 @@ class ProductRepository {
         image:AppAssets.shawerma,
         category: "food",
       ),
-      ProductModel(
-        id: '5',
-        name: 'men perfume',
-        description: 'arabic shawerma with meet and vegitables',
-        price: 20.0,
-        image:AppAssets.per1,
-        category: "perf",
-      ),
+     
       ProductModel(
         id: '6',
         name: 'women perfume',
         description: 'arabic shawerma with meet and vegitables',
         price: 20.0,
         image:AppAssets.perf2,
-        category: "perf",
+        category: "perfume",
       ),
     ];
   }

@@ -18,4 +18,8 @@ class ProductProvider with ChangeNotifier {
     products = _repository.products();
     notifyListeners();
   }
+  
+List<ProductModel> getProductsByCategory(String categoryName) {
+  return products.where((prod) => prod.category == categoryName).toList();
+}
 }

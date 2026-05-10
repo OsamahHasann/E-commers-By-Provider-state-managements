@@ -1,5 +1,6 @@
 import 'package:e_commers_by_provider/features/cart/cart_presention/cart_screen.dart';
 import 'package:e_commers_by_provider/features/cart/cart_provider/cart_provider.dart';
+import 'package:e_commers_by_provider/features/products/product_presention/category_screen.dart';
 import 'package:e_commers_by_provider/features/products/product_presention/favorit_prodacts.dart';
 import 'package:e_commers_by_provider/features/products/product_presention/products_screen.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class _CustomBottNavState extends State<CustomBottNav> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const FavoritesScreen(),
+                  builder: (context) => CategoriesScreen(),
                 ),
               ),
             },
