@@ -50,20 +50,34 @@ class CategoriesScreen extends StatelessWidget {
         ],),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: ListView(
           children: [
             _buildCategoryCard(
               context, 
-              title: 'Food section', 
-              category: 'food', 
-              icon: Icons.fastfood
+              title: 'electronics section', 
+              category: 'electronics', 
+              icon: Icons.laptop
             ),
             SizedBox(height: 20),
             _buildCategoryCard(
               context, 
-              title: 'Perfume section', 
-              category: 'perfume', 
+              title: 'jewelery section', 
+              category: 'jewelery', 
               icon: Icons.local_florist
+            ),
+            SizedBox(height: 20),
+            _buildCategoryCard(
+              context, 
+              title: "men's clothing section", 
+              category: "men's clothing", 
+              icon: Icons.man_sharp
+            ),
+            SizedBox(height: 20),
+            _buildCategoryCard(
+              context, 
+              title: "women's clothing section", 
+              category: "women's clothing", 
+              icon: Icons.woman_sharp
             ),
           ],
         ),

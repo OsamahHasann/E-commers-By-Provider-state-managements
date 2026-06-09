@@ -42,7 +42,7 @@ class _ProductCardState extends State<ProductCard> {
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     width: double.infinity,
-                    child: Image.asset(
+                    child: Image.network(
                       widget.product.image,
                       fit: BoxFit.contain,
                     ),
@@ -65,6 +65,14 @@ class _ProductCardState extends State<ProductCard> {
                       const SizedBox(height: 4),
                       Text(
                         "${widget.product.price} \$",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "${widget.product.category} ",
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w900,

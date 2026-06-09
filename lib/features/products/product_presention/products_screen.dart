@@ -59,7 +59,17 @@ class ProductsScreen extends StatelessWidget {
       body: Consumer<ProductProvider>(
         builder: (context, provider, child) {
           final allProducts = provider.getProducts;
-          // print(allProducts.length);
+          final productProvider = Provider.of<ProductProvider>(context);
+
+  if (productProvider.isLoading) {
+    return const Center(child: CircularProgressIndicator()); 
+  }
+
+  if (productProvider.errorMessage.isNotEmpty) {
+    return Center(child: Text(productProvider.errorMessage)); 
+  }
+
+  // final products = productProvider.getProducts;
           return GridView.builder(
             padding: EdgeInsets.all(AppConstants.horizontalPadding),
 
