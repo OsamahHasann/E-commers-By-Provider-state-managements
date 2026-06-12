@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProductModel {
   final String id;
   final String name;
@@ -6,7 +8,7 @@ class ProductModel {
   final String image;
   final String category;
   bool isFavorite;
-  bool isAddedToCart = false;
+  bool isAddedToCart;
 
   ProductModel({
     required this.id,
@@ -19,15 +21,26 @@ class ProductModel {
     this.isAddedToCart = false,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'description': description,
+      'price': price,
+      'image': image,
+      'category': category,
+    };
+  }
+
+  factory ProductModel.fromDoc(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return ProductModel(
-      id: json['id'].toString(),
-      name: json['title'] ?? '',
-      description: json['description'] ?? '',
-      price: (json['price'] as num).toDouble(),
-      image: json['image'] ?? '',
-      category: json['category'] ?? '',
-      isFavorite: false,
+      id: doc.id,
+      name: data['name'] ?? '',
+      description: data['description'] ?? '',
+      price: (data['price'] as num).toDouble(),
+      image: data['image'] ?? '',
+      category: data['category'] ?? '',
+      isFavorite: false, 
       isAddedToCart: false,
     );
   }

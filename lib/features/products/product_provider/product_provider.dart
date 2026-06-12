@@ -1,42 +1,71 @@
-import 'package:e_commers_by_provider/features/products/product_data/product_model.dart';
-import 'package:e_commers_by_provider/features/products/product_data/product_repository.dart';
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../product_data/product_model.dart';
+import '../product_data/product_repository.dart';
 
 class ProductProvider with ChangeNotifier {
   final ProductRepository _repository = ProductRepository();
-  List<ProductModel> products = [];
+  List<ProductModel> _products = [];
+  List<String> _favoriteIds = [];
   late ProductModel selectedProduct;
   
-  bool _isLoading = false;
-  String _errorMessage = '';
+  
+  StreamSubscription? _productsSubscription;
+  StreamSubscription? _favoritesSubscription;
 
-  bool get isLoading => _isLoading;
-  String get errorMessage => _errorMessage;
+  List<ProductModel> get getProducts => _products;
 
   ProductProvider() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      fetchProducts();
+    _initStreams();
+  }
+  void _initStreams() {
+    _productsSubscription = _repository.getProductsStream().listen((fetchedProducts) {
+      _products = fetchedProducts;
+      _updateProductsFavoriteStatus();
+      notifyListeners();
+    });
+
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      _favoritesSubscription?.cancel();
+      if (user != null) {
+        _favoritesSubscription = _repository.getFavoritesStream(user.uid).listen((favIds) {
+          _favoriteIds = favIds;
+          _updateProductsFavoriteStatus();
+          notifyListeners();
+        });
+      } else {
+        _favoriteIds = [];
+        _updateProductsFavoriteStatus();
+        notifyListeners();
+      }
     });
   }
 
-  List<ProductModel> get getProducts => products;
-
-   Future<void> fetchProducts() async {
-    _isLoading = true;
-    _errorMessage = '';
-    notifyListeners();
-
-    try {
-      products = await _repository.products();
-    } catch (e) {
-      _errorMessage = e.toString().replaceAll("Exception:", "");
-    } finally {
-      _isLoading = false;
-      notifyListeners(); 
+void _updateProductsFavoriteStatus() {
+    for (var prod in _products) {
+      prod.isFavorite = _favoriteIds.contains(prod.id);
     }
   }
-  
+
+  Future<void> toggleFavoriteStatus(ProductModel product) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      product.isFavorite = !product.isFavorite;
+      notifyListeners();
+      
+      await _repository.toggleFavorite(user.uid, product.id, product.isFavorite);
+    }
+  }
+
   List<ProductModel> getProductsByCategory(String categoryName) {
-    return products.where((prod) => prod.category.toLowerCase() == categoryName.toLowerCase()).toList();
+    return _products.where((prod) => prod.category.toLowerCase() == categoryName.toLowerCase()).toList();
+  }
+
+  @override
+  void dispose() {
+    _productsSubscription?.cancel();
+    _favoritesSubscription?.cancel();
+    super.dispose();
   }
 }

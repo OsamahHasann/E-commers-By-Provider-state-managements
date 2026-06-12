@@ -87,19 +87,21 @@ class _ProductCardState extends State<ProductCard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // داخل ProductCard
                       Consumer<FavoriteProvider>(
-                        builder: (context, favoriteProvider, child) {
+                        builder: (context, favProvider, child) {
+                          // التحقق هل هذا المنتج موجود في قائمة المفضلة السحابية
+                          bool isFav = favProvider.favoriteProductIds.contains(
+                            widget.product.id,
+                          );
+
                           return IconButton(
                             icon: Icon(
-                              widget.product.isFavorite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: widget.product.isFavorite
-                                  ? Colors.red
-                                  : Colors.grey,
+                              isFav ? Icons.favorite : Icons.favorite_border,
+                              color: isFav ? Colors.red : Colors.grey,
                             ),
                             onPressed: () {
-                              favoriteProvider.toggleFavorite(widget.product);
+                              favProvider.toggleFavorite(widget.product);
                             },
                           );
                         },
@@ -119,7 +121,7 @@ class _ProductCardState extends State<ProductCard> {
                             onPressed: () {
                               if (widget.product.isAddedToCart) {
                                 cartProvider.removeItem(widget.product);
-                              }else {
+                              } else {
                                 cartProvider.addItem(widget.product);
                               }
                             },

@@ -5,9 +5,9 @@ import 'package:e_commers_by_provider/features/cart/cart_presention/cart_screen.
 import 'package:e_commers_by_provider/features/cart/cart_provider/cart_provider.dart';
 import 'package:e_commers_by_provider/features/products/product_presention/favorit_prodacts.dart';
 import 'package:e_commers_by_provider/features/products/product_provider/product_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//  import '../product_provider/product_provider.dart';
 
 class ProductsScreen extends StatelessWidget {
    const ProductsScreen({super.key});
@@ -16,9 +16,16 @@ class ProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Theme.of(context).canvasColor,
         title: const Text(AppConstants.appName),
         actions: [
+        
+    IconButton(
+      icon: const Icon(Icons.logout, color: Colors.red),
+      onPressed: () async {
+        await FirebaseAuth.instance.signOut(); 
+         },
+    ),
+  
           IconButton(
             icon: Icon(Icons.favorite_border_rounded, color: Colors.red),
             onPressed: () => {
@@ -59,17 +66,7 @@ class ProductsScreen extends StatelessWidget {
       body: Consumer<ProductProvider>(
         builder: (context, provider, child) {
           final allProducts = provider.getProducts;
-          final productProvider = Provider.of<ProductProvider>(context);
 
-  if (productProvider.isLoading) {
-    return const Center(child: CircularProgressIndicator()); 
-  }
-
-  if (productProvider.errorMessage.isNotEmpty) {
-    return Center(child: Text(productProvider.errorMessage)); 
-  }
-
-  // final products = productProvider.getProducts;
           return GridView.builder(
             padding: EdgeInsets.all(AppConstants.horizontalPadding),
 
