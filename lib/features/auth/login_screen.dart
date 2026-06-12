@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         }
                       },
-                      child: const Text('Entery'),
+                      child: const Text('Login'),
                     ),
               TextButton(
                 onPressed: () {

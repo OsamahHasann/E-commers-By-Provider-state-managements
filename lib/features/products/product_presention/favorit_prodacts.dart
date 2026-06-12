@@ -12,7 +12,7 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('المفضلة')),
+      appBar: AppBar(title: const Text('Favorite Products')),
       body: Consumer2<ProductProvider, FavoriteProvider>(
         builder: (context, productProvider, favProvider, child) {
           

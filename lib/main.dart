@@ -13,7 +13,16 @@ import 'package:e_commers_by_provider/features/auth/auth_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyDqRaLztL1vSr9vMzbPlygdfPXNokdIRGc",
+      appId: "1:469382794060:web:8b782631202d987cfa1de9",
+      messagingSenderId: "469382794060",
+      projectId: "kason-application",
+      storageBucket: "kason-application.firebasestorage.app",
+    ),
+  );
   runApp(
     MultiProvider(
       providers: [
