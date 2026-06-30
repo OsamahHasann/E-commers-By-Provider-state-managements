@@ -1,5 +1,6 @@
 
 
+import 'package:e_commers_by_provider/core/theme/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => ProductProvider()),
         ChangeNotifierProvider(create: (context) => FavoriteProvider()),
         ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: const MyApp(),
     ),
@@ -41,11 +43,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: AppConstants.appName,
-      theme: AppTheme.darkTheme,
-      home: const AuthWrapper(), 
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: AppConstants.appName,
+          theme: themeProvider.currentTheme, 
+          home: const AuthWrapper(), 
+        );
+      },
     );
   }
+
+
 }

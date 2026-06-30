@@ -1,4 +1,5 @@
 import 'package:e_commers_by_provider/core/constants/app_constans.dart';
+import 'package:e_commers_by_provider/core/theme/theme_provider.dart';
 import 'package:e_commers_by_provider/core/widgets/custom_bott_nav.dart';
 import 'package:e_commers_by_provider/core/widgets/product_card.dart';
 import 'package:e_commers_by_provider/features/cart/cart_presention/cart_screen.dart';
@@ -10,57 +11,56 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatelessWidget {
-   const ProductsScreen({super.key});
+  const ProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppConstants.appName),
-        actions: [
         
-    IconButton(
-      icon: const Icon(Icons.logout, color: Colors.red),
-      onPressed: () async {
-        await FirebaseAuth.instance.signOut(); 
-         },
-    ),
-  
+        actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border_rounded, color: Colors.red),
-            onPressed: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const FavoritesScreen(),
-                ),
-              ),
+            icon: const Icon(Icons.logout, color: Colors.red),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
             },
           ),
-        Stack(
-          alignment: Alignment.topRight,
-          children: [
-              IconButton(
+          IconButton(
             icon: Icon(
-              Icons.shopping_cart_outlined,
-              color: Theme.of(context).primaryColor,
+              Provider.of<ThemeProvider>(context).isDarkMode
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
             ),
-            onPressed: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const CartScreen()),
+            onPressed: () {
+              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+            },
+          ),
+          Stack(
+            alignment: Alignment.topRight,
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Theme.of(context).primaryColor,
+                ),
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CartScreen()),
+                  ),
+                },
               ),
-            },
+              Consumer<CartProvider>(
+                builder: (context, provider, child) {
+                  if (provider.itemCount > 0) {
+                    return Text("${provider.itemCount}");
+                  }
+                  return Text("");
+                },
+              ),
+            ],
           ),
-          Consumer<CartProvider>(
-            builder: (context, provider, child) {
-              if (provider.itemCount > 0) {
-                return Text("${provider.itemCount}");
-              }
-              return Text("");
-            },
-          ),
-          ],)
         ],
       ),
       body: Consumer<ProductProvider>(

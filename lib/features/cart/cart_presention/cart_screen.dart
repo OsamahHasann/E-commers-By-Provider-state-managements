@@ -1,7 +1,9 @@
 import 'package:e_commers_by_provider/core/constants/app_constans.dart';
+import 'package:e_commers_by_provider/core/theme/theme_provider.dart';
 import 'package:e_commers_by_provider/core/widgets/custom_bott_nav.dart';
 import 'package:e_commers_by_provider/core/widgets/product_card.dart';
 import 'package:e_commers_by_provider/features/cart/cart_provider/cart_provider.dart';
+import 'package:e_commers_by_provider/features/products/product_data/product_model.dart'; 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,10 +13,26 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('cart')),
+      appBar: AppBar(
+        title: const Text('Cart'),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Provider.of<ThemeProvider>(context).isDarkMode
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+            ),
+            onPressed: () {
+              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+            },
+          )
+        ],
+      ),
       body: Consumer<CartProvider>(
         builder: (context, provider, child) {
-          if (provider.getItems.isEmpty) {
+          final cartItemsList = provider.getItems.values.toList();
+
+          if (cartItemsList.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +44,7 @@ class CartScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'You have not any products yet!',
+                    'You do not have any products yet!',
                     style: TextStyle(color: Colors.grey[600], fontSize: 18),
                   ),
                 ],
@@ -37,45 +55,55 @@ class CartScreen extends StatelessWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GridView.builder(
+              Expanded(
+                child: GridView.builder(
+                  padding: EdgeInsets.all(AppConstants.horizontalPadding),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.72,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                  ),
+                  itemCount: cartItemsList.length,
+                  itemBuilder: (context, index) {
+                    final currentCartItem = cartItemsList[index];
 
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: EdgeInsets.all(AppConstants.horizontalPadding),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.72,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
+                    final productToDisplay = ProductModel(
+                      id: currentCartItem.id,
+                      name: currentCartItem.title,
+                      price: currentCartItem.price,
+                      image: currentCartItem.image,
+                      category: "Cart Item",
+                      
+                    );
+                    
+                    productToDisplay.isAddedToCart = true;
+
+                    return ProductCard(product: productToDisplay);
+                  },
                 ),
-                itemCount: provider.getItems.length,
-                itemBuilder: (context, index) {
-                   provider.getItems[index].isAddedToCart = true;
-                  return 
-                  ProductCard(product: provider.getItems[index]);
-                  
-                },
               ),
               Container(
                 padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  // color: Colors.white,
-                  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(color: Colors.black12, blurRadius: 10)
+                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Text(
                       "Total Price:",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "${provider.totalprice.toStringAsFixed(2)}\$", // تأكد من وجود totalprice في البروفايدر
+                      "\$${provider.totalPrice.toStringAsFixed(2)}",
                       style: const TextStyle(
-                        fontSize: 20, 
-                        fontWeight: FontWeight.bold, 
-                        color: Colors.orange // لونك المعتمد
-                      ),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange),
                     ),
                   ],
                 ),
@@ -84,8 +112,7 @@ class CartScreen extends StatelessWidget {
           );
         },
       ),
-
-      bottomNavigationBar: CustomBottNav(),
+      bottomNavigationBar: const CustomBottNav(),
     );
   }
 }

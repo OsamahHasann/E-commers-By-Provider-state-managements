@@ -90,7 +90,6 @@ class _ProductCardState extends State<ProductCard> {
                       // داخل ProductCard
                       Consumer<FavoriteProvider>(
                         builder: (context, favProvider, child) {
-                          // التحقق هل هذا المنتج موجود في قائمة المفضلة السحابية
                           bool isFav = favProvider.favoriteProductIds.contains(
                             widget.product.id,
                           );
@@ -120,7 +119,7 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                             onPressed: () {
                               if (widget.product.isAddedToCart) {
-                                cartProvider.removeItem(widget.product);
+                                cartProvider.removeItem(widget.product.id);
                               } else {
                                 cartProvider.addItem(widget.product);
                               }

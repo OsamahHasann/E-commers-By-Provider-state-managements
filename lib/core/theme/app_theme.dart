@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData darkTheme = ThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      selectedItemColor: AppColors.primary,
+      unselectedLabelStyle: TextStyle(color: AppColors.primary),
+      selectedIconTheme: IconThemeData(color: AppColors.primary),
+      unselectedItemColor: AppColors.primary, 
+    ),
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: const Color(0xFF011627), // الخلفية الفاخرة
+    scaffoldBackgroundColor: const Color(0xFF011627), 
     primaryColor: const Color(0xFFFF9F1C),
     cardColor: const Color(0xFF0B2239),
     appBarTheme: const AppBarTheme(
@@ -16,10 +22,33 @@ class AppTheme {
         fontWeight: FontWeight.bold,
         color: AppColors.primary,
       ),
+      iconTheme: IconThemeData(color: Colors.white), 
     ),
     textTheme: const TextTheme(
       displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFFDFFFC)),
       bodyMedium: TextStyle(fontSize: 16, color: Color(0xFFFDFFFC)),
+    ),
+  );
+
+  static ThemeData lightTheme = ThemeData(
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: const Color(0xFFF8F9FA), 
+    primaryColor: const Color(0xFFFF9F1C), 
+    cardColor: Colors.white,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.white,
+      elevation: 1,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: AppColors.primary,
+      ),
+      iconTheme: IconThemeData(color: Color(0xFF011627)),
+    ),
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF011627)), 
+      bodyMedium: TextStyle(fontSize: 16, color: Color(0xFF011627)),
     ),
   );
 }

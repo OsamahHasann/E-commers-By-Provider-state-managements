@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ProductModel {
   final String id;
   final String name;
-  final String description;
+  // final String description;
   final double price;
   final String image;
   final String category;
@@ -13,7 +13,7 @@ class ProductModel {
   ProductModel({
     required this.id,
     required this.name,
-    required this.description,
+    // required this.description,
     required this.price,
     required this.image,
     required this.category,
@@ -24,7 +24,7 @@ class ProductModel {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'description': description,
+      // 'description': description,
       'price': price,
       'image': image,
       'category': category,
@@ -36,7 +36,7 @@ class ProductModel {
     return ProductModel(
       id: doc.id,
       name: data['name'] ?? '',
-      description: data['description'] ?? '',
+      // description: data['description'] ?? '',
       price: (data['price'] as num).toDouble(),
       image: data['image'] ?? '',
       category: data['category'] ?? '',
